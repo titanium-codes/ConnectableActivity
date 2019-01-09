@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="codes.titanium.connectableactivity">
+
+    <application>
+        <activity
+                android:name=".ConnectableActivity"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+    </application>
+
+</manifest>
