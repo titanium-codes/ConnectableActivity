@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity
 
 internal class ConnectableActivity : AppCompatActivity() {
 
-    lateinit var messenger: Messenger
+    private lateinit var messenger: Messenger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ internal class ConnectableActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        messenger.send(createMessage(ON_ACTIVITY_RESULT, data, requestCode))
+        messenger.send(createMessage(ON_ACTIVITY_RESULT, data, resultCode))
         finishWithNoAnimation()
     }
 
@@ -43,9 +43,17 @@ internal class ConnectableActivity : AppCompatActivity() {
         finishWithNoAnimation()
     }
 
-    fun finishWithNoAnimation() {
+    /**
+     * Finishes activity with no animation
+     */
+    fun Activity.finishWithNoAnimation() {
         finish()
         overridePendingTransition(0, 0)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setVisible(true)
     }
 
     override fun onDestroy() {
@@ -57,8 +65,8 @@ internal class ConnectableActivity : AppCompatActivity() {
 
 /**
  * @param onCreate callback called as soon as activity onCreate was called. Do your activity logic here
- * @param onActivityResult callback is called when anActivityResult is called inside activity
- * @param onDeAttach If you want to define some specific logic that will be done on activity destroy - do it here
+ * @param onActivityResult callback is called when anActivityResult is called inside activity with intent and result code
+ * @param onDeAttach if you want to define some specific logic that will be done on activity destroy - do it here
  * @param onRequestPermissionsResult called as soon as onRequestPermission result was called in activity
  */
 @JvmOverloads
